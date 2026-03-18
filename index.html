@@ -1,1 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-16">
+ <title> Anniqa's Achievement </title>
+ <style>
+  body {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 100vh;
+   margin: 0;
+   font-family: 'Times New Roman', Times, serif, sans-serif;
+   background: linear-gradient(135deg, #2d1b69 0%, #5d3a87 25%, #8b5a9e 50%, #c77dad 75%, #f5d5d0 100%);
+   background-attachment: fixed;
+   cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="wandGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%238B4513;stop-opacity:1" /><stop offset="100%" style="stop-color:%23D2691E;stop-opacity:1" /></linearGradient></defs><line x1="50" y1="56" x2="6" y2="8" stroke="url(%23wandGrad)" stroke-width="3" stroke-linecap="round"/><circle cx="4" cy="6" r="6" fill="%23FFD700"/><circle cx="0" cy="2" r="4" fill="%23FFF9E6"/><circle cx="-2" cy="-2" r="3" fill="%23FFD700"/><circle cx="8" cy="2" r="4" fill="%23FFF9E6"/><polygon points="4,6 0,0 2,4" fill="%23FFD700" opacity="0.8"/><circle cx="2" cy="4" r="2" fill="%23FFFFFF"/><circle cx="6" cy="8" r="1.5" fill="%23FFFFFF"/></svg>') 8 8, auto;
+  }
+  
 
+  
+  @keyframes tweenIn {
+   from {
+    opacity: 0;
+    transform: scale(0.5);
+   }
+   to {
+    opacity: 1;
+    transform: scale(1);
+   }
+  }
+  
+  button {
+   padding: 20px 40px;
+   font-size: 20px;
+   background: linear-gradient(135deg, #c77dad 0%, #b89fc5 50%, #f5d5d0 100%);
+   color: rgb(100, 47, 47);
+   border: none;
+   border-radius: 25px;
+   cursor: pointer;
+   transition: all 0.3s ease;
+   animation: tweenIn 0.6s ease-out;
+   font-weight: 600;
+   box-shadow: 0 0 30px rgba(199, 125, 173, 0.4), 0 0 60px rgba(255, 215, 0, 0.2);
+   letter-spacing: 1px;
+  }
+  
+  button:hover {
+   transform: scale(1.08);
+   box-shadow: 0 0 50px rgba(199, 125, 173, 0.7), 0 0 100px rgba(255, 215, 0, 0.4);
+   background: linear-gradient(135deg, #e89ec0 0%, #d4b5d9 50%, #fff0e6 100%);
+  }
+  
+  button:active {
+   transform: scale(0.98);
+  }
+  
+  .stars-container {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   pointer-events: none;
+   overflow: hidden;
+  }
+  
+  .star {
+   position: absolute;
+   width: 2px;
+   height: 2px;
+   background: white;
+   border-radius: 50%;
+   animation: twinkle 3s infinite;
+  }
+  
+  @keyframes twinkle {
+   0%, 100% {
+    opacity: 0.3;
+   }
+   50% {
+    opacity: 1;
+   }
+  }
+  
+  .menu-container {
+   position: relative;
+   z-index: 10;
+  }
+  
+  .moon {
+   position: fixed;
+   top: 80px;
+   right: 100px;
+   width: 100px;
+   height: 100px;
+   background: radial-gradient(circle at 35% 35%, #ffffff, #f5f5dc);
+   border-radius: 50%;
+   box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+   z-index: 2;
+   cursor: pointer;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   animation: moonBreathe 3.5s ease-in-out infinite;
+   transition: filter 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  
+  @keyframes moonBreathe {
+   0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.3));
+   }
+   50% {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 45px rgba(255, 255, 255, 0.6));
+   }
+  }
+  
+  .moon:hover {
+   animation: moonBreathe 2s ease-in-out infinite;
+   transform: scale(1.15) rotateZ(10deg);
+   filter: drop-shadow(0 0 60px rgba(255, 215, 0, 0.8)) drop-shadow(0 0 30px rgba(232, 158, 192, 0.6));
+  }
+  
+  .moon-face {
+   position: absolute;
+   width: 100%;
+   height: 100%;
+   pointer-events: none;
+  }
+  
+  .moon-eye {
+   position: absolute;
+   width: 12px;
+   height: 16px;
+   background: #2d1b69;
+   border-radius: 50%;
+   opacity: 1;
+   transition: opacity 0.3s ease;
+  }
+  
+  .moon-eye-left {
+   top: 35px;
+   left: 28px;
+   opacity: 1;
+   animation: slowWink 3.5s ease-in-out infinite;
+  }
+  
+  .moon-eye-right {
+   top: 35px;
+   right: 28px;
+   animation: slowWink 3.5s ease-in-out infinite;
+  }
+  
+  @keyframes slowWink {
+   0%, 10%, 100% {
+    height: 16px;
+    opacity: 0;
+   }
+   5% {
+    height: 2px;
+    opacity: 1;
+   }
+  }
+  
+  @keyframes gentleWink {
+   0%, 20%, 100% {
+    height: 16px;
+    opacity: 1;
+   }
+   10% {
+    height: 2px;
+    opacity: 1;
+   }
+  }
+  
+  .moon:hover .moon-eye-right {
+   animation: gentleWink 3s ease-in-out infinite !important;
+  }
+  
+  .moon:hover .moon-eye-left {
+   animation: gentleWink 3s ease-in-out infinite !important;
+  }
+  
+  .moon-smile {
+   position: absolute;
+   width: 30px;
+   height: 15px;
+   bottom: 25px;
+   left: 50%;
+   transform: translateX(-50%);
+   border: 2px solid #2d1b69;
+   border-top: none;
+   border-radius: 0 0 30px 30px;
+   opacity: 0;
+   transition: opacity 0.3s ease;
+   display: none;
+  }
+  
+  .sunlight {
+   position: fixed;
+   top: -200px;
+   right: -200px;
+   width: 600px;
+   height: 600px;
+   background: radial-gradient(circle, rgba(255, 215, 0, 0.15) 0%, transparent 70%);
+   border-radius: 50%;
+   z-index: 1;
+   pointer-events: none;
+  }
+  
+  .cloud {
+   position: fixed;
+   background: white;
+   border-radius: 100px;
+   opacity: 0.35;
+   z-index: 3;
+   animation: float 50s infinite ease-in-out;
+   filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
+  }
+  
+  .cloud::before,
+  .cloud::after {
+   content: '';
+   position: absolute;
+   background: white;
+   border-radius: 100px;
+  }
+  
+  .cloud::before {
+   width: 90px;
+   height: 90px;
+   top: -45px;
+   left: 5px;
+  }
+  
+  .cloud::after {
+   width: 120px;
+   height: 120px;
+   top: -60px;
+   right: 5px;
+  }
+  
+  .cloud1 {
+   width: 200px;
+   height: 80px;
+   top: 10%;
+   left: -200px;
+   animation-delay: 0s;
+  }
+  
+  .cloud2 {
+   width: 230px;
+   height: 100px;
+   top: 35%;
+   right: -230px;
+   animation-delay: 10s;
+  }
+  
+  .cloud3 {
+   width: 180px;
+   height: 75px;
+   top: 60%;
+   left: -180px;
+   animation-delay: 20s;
+  }
+  
+  @keyframes float {
+   0%, 100% {
+    transform: translateX(0);
+   }
+   50% {
+    transform: translateX(calc(100vw + 200px));
+   }
+  }
+  
+  @keyframes shimmer {
+   0%, 100% {
+    box-shadow: 0 0 50px 20px rgba(255, 215, 0, 0.4), 0 0 100px 40px rgba(255, 215, 0, 0.2);
+   }
+   50% {
+    box-shadow: 0 0 80px 30px rgba(255, 255, 255, 0.8), 0 0 150px 60px rgba(255, 215, 0, 0.5);
+   }
+  }
+  
+  .bird {
+   position: fixed;
+   font-size: 24px;
+   z-index: 5;
+   pointer-events: none;
+   animation: fly 20s infinite linear;
+   opacity: 0.7;
+  }
+  
+  .bird svg {
+   animation: wingFlap 0.6s infinite ease-in-out;
+  }
+  
+  @keyframes wingFlap {
+   0%, 100% {
+    transform: scaleY(1);
+   }
+   50% {
+    transform: scaleY(0.7);
+   }
+  }
+  
+  @keyframes fly {
+   0% {
+    transform: translateX(0) translateY(0);
+   }
+   25% {
+    transform: translateX(calc(100vw / 4)) translateY(-20px);
+   }
+   50% {
+    transform: translateX(calc(100vw / 2)) translateY(0);
+   }
+   75% {
+    transform: translateX(calc(100vw * 0.75)) translateY(-15px);
+   }
+   100% {
+    transform: translateX(calc(100vw + 50px)) translateY(0);
+   }
+  }
+  
+  .bird1 {
+   top: 20%;
+   left: -50px;
+   animation-delay: 0s;
+  }
+  
+  .bird2 {
+   top: 35%;
+   right: -50px;
+   animation-delay: 10s;
+   animation-direction: reverse;
+  }
+  
+  .bird3 {
+   top: 15%;
+   left: -50px;
+   animation-delay: 15s;
+   font-size: 20px;
+   opacity: 0.5;
+  }
+  
+  .h1 {
+   background: linear-gradient(90deg, #FFD700, #E89EC0, #FFD700);
+   -webkit-background-clip: text;
+   -webkit-text-fill-color: transparent;
+   background-clip: text;
+   text-shadow: none;
+   font-weight: bold;
+   font-size: 3.5em;
+   margin: 0 0 10px 0;
+   animation: tweenIn 0.6s ease-out, floatUp 3s ease-in-out infinite 0.6s;
+   transition: transform 0.3s ease;
+  }
+  
+  .h1:hover {
+   transform: scale(1.05);
+  }
+  
+  .subtitle {
+   font-size: 1.3em;
+   color: rgba(255, 255, 255, 0.8);
+   margin-bottom: 20px;
+   text-shadow: 0 0 15px rgba(199, 125, 173, 0.5);
+   animation: tweenIn 0.8s ease-out 0.2s backwards;
+   font-style: italic;
+  }
+  
+  .instructions {
+   font-size: 0.95em;
+   color: rgba(255, 255, 255, 0.7);
+   margin-top: 30px;
+   animation: fadeInUp 0.8s ease-out 0.4s backwards;
+   text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  }
+  
+  @keyframes floatUp {
+   0%, 100% {
+    transform: translateY(0px);
+   }
+   50% {
+    transform: translateY(-15px);
+   }
+  }
+  
+  @keyframes fadeInUp {
+   from {
+    opacity: 0;
+    transform: translateY(20px);
+   }
+   to {
+    opacity: 1;
+    transform: translateY(0);
+   }
+  }
+  
+  .floating-orb {
+   position: fixed;
+   pointer-events: none;
+   border-radius: 50%;
+   z-index: 3;
+  }
+  
+  @keyframes float-orbit {
+   0%, 100% {
+    transform: translate(0, 0);
+   }
+   25% {
+    transform: translate(30px, -30px);
+   }
+   50% {
+    transform: translate(0, 40px);
+   }
+   75% {
+    transform: translate(-30px, -20px);
+   }
+  }
+  
+  .music-toggle {
+   position: fixed;
+   top: 20px;
+   right: 20px;
+   background: rgba(199, 125, 173, 0.6);
+   border: 2px solid rgba(255, 215, 0, 0.5);
+   color: white;
+   padding: 10px 15px;
+   border-radius: 50px;
+   cursor: pointer;
+   font-size: 14px;
+   z-index: 50;
+   transition: all 0.3s ease;
+   box-shadow: 0 0 20px rgba(199, 125, 173, 0.4);
+  }
+  
+  .music-toggle:hover {
+   background: rgba(199, 125, 173, 0.8);
+   box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+   transform: scale(1.05);
+  }
+  
+  .menu-container {
+   position: relative;
+   z-index: 10;
+   animation: fadeInUp 1s ease-out;
+  }
+  
+  .sparkle {
+   position: fixed;
+   pointer-events: none;
+   animation: sparkleAnimation 0.8s ease-out forwards;
+  }
+  
+  @keyframes sparkleAnimation {
+   0% {
+    opacity: 1;
+    transform: scale(1) translate(0, 0);
+   }
+   100% {
+    opacity: 0;
+    transform: scale(0) translate(var(--tx), var(--ty));
+   }
+  }
+  
+  .mountains {
+   position: fixed;
+   bottom: 0;
+   left: 0;
+   width: 100%;
+   height: 40%;
+   pointer-events: none;
+   z-index: 4;
+   background: linear-gradient(to bottom, transparent 0%, rgba(45, 27, 105, 0.3) 100%);
+  }
+  
+  .mountain {
+   position: absolute;
+   bottom: 0;
+   width: 0;
+   height: 0;
+   border-style: solid;
+  }
+  
+  .mountain1 {
+   left: 5%;
+   border-width: 0 120px 250px 120px;
+   border-color: transparent transparent rgba(93, 58, 135, 0.5) transparent;
+   opacity: 0.6;
+  }
+  
+  .mountain2 {
+   left: 20%;
+   border-width: 0 200px 420px 200px;
+   border-color: transparent transparent rgba(139, 90, 158, 0.7) transparent;
+   opacity: 0.75;
+  }
+  
+  .mountain3 {
+   left: 48%;
+   border-width: 0 140px 280px 140px;
+   border-color: transparent transparent rgba(199, 125, 173, 0.5) transparent;
+   opacity: 0.6;
+  }
+  
+  .mountain4 {
+   left: 68%;
+   border-width: 0 180px 380px 180px;
+   border-color: transparent transparent rgba(175, 100, 153, 0.65) transparent;
+   opacity: 0.7;
+  }
+  
+  .mountain5 {
+   right: 5%;
+   border-width: 0 160px 320px 160px;
+   border-color: transparent transparent rgba(139, 90, 158, 0.55) transparent;
+   opacity: 0.65;
+  }
+  
+  .blackout-transition {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background: black;
+   pointer-events: none;
+   z-index: 1000;
+   opacity: 0;
+   transition: opacity 0.7s ease-in-out;
+  }
+  
+  .blackout-transition.active {
+   opacity: 1;
+  }
+  
+  .blackout-transition.fadeout {
+   opacity: 0;
+  }
+ </style>
+</head>
+<body>
+ <button class="music-toggle" id="musicToggle">🎵 Music: ON</button>
+ <div id="youtubePlayer" style="display: none;"></div>
+ <div class="sunlight"></div>
+ <div class="mountains">
+  <div class="mountain mountain1"></div>
+  <div class="mountain mountain2"></div>
+  <div class="mountain mountain3"></div>
+  <div class="mountain mountain4"></div>
+  <div class="mountain mountain5"></div>
+ </div>
+ <div class="bird bird1"><svg viewBox="0 0 100 60" width="50" height="30"><path d="M 20 30 Q 30 20, 40 20 Q 45 20, 50 25 L 70 20 Q 75 18, 80 20 Q 75 25, 70 28 L 50 35 Q 45 38, 40 38 Q 30 38, 20 30 Z" fill="black" opacity="0.7"/><circle cx="48" cy="26" r="2" fill="black" opacity="0.7"/></svg></div>
+ <div class="bird bird2"><svg viewBox="0 0 100 60" width="50" height="30"><path d="M 20 30 Q 30 20, 40 20 Q 45 20, 50 25 L 70 20 Q 75 18, 80 20 Q 75 25, 70 28 L 50 35 Q 45 38, 40 38 Q 30 38, 20 30 Z" fill="black" opacity="0.7"/><circle cx="48" cy="26" r="2" fill="black" opacity="0.7"/></svg></div>
+ <div class="bird bird3"><svg viewBox="0 0 100 60" width="40" height="24"><path d="M 20 30 Q 30 20, 40 20 Q 45 20, 50 25 L 70 20 Q 75 18, 80 20 Q 75 25, 70 28 L 50 35 Q 45 38, 40 38 Q 30 38, 20 30 Z" fill="black" opacity="0.5"/><circle cx="48" cy="26" r="1.5" fill="black" opacity="0.5"/></svg></div>
+ <div class="moon">
+  <div class="moon-face">
+   <div class="moon-eye moon-eye-left"></div>
+   <div class="moon-eye moon-eye-right"></div>
+   <div class="moon-smile"></div>
+  </div>
+ </div>
+ <div class="cloud cloud1"></div>
+ <div class="cloud cloud2"></div>
+ <div class="cloud cloud3"></div>
+ <div class="stars-container" id="starsContainer"></div>
+ <div id="orbsContainer"></div>
+ <div class="blackout-transition" id="blackoutOverlay"></div>
+ <div class="menu-container">
+  <h1 class="h1">My Achievement</h1>
+  <p class="subtitle">Celebrate Your Moments</p>
+  <button id="viewBtn" title="Click to see your achievements">Click to View</button>
+  <p class="instructions">✨ Hover over the moon for a special surprise ✨</p>
+ </div>
+ 
+ <script>
+  // Generate random stars
+  const starsContainer = document.getElementById('starsContainer');
+  const numStars = 100;
+  
+  for (let i = 0; i < numStars; i++) {
+   const star = document.createElement('div');
+   star.className = 'star';
+   star.style.left = Math.random() * 100 + '%';
+   star.style.top = Math.random() * 100 + '%';
+   star.style.animationDelay = Math.random() * 3 + 's';
+   starsContainer.appendChild(star);
+  }
+  
+  // Create a single AudioContext for all sound effects
+  let audioContext = null;
+  function getAudioContext() {
+   if (!audioContext) {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+   }
+   return audioContext;
+  }
+  
+  // Moon interactivity with debounced sound
+  const moon = document.querySelector('.moon');
+  let lastMoonSound = 0;
+  
+  moon.addEventListener('mouseenter', () => {
+   const now = Date.now();
+   if (now - lastMoonSound < 300) return; // Debounce: only play every 300ms
+   lastMoonSound = now;
+   
+   // Create shimmering sound effect
+   const ctx = getAudioContext();
+   const time = ctx.currentTime;
+   
+   // Create a shimmer sound with multiple oscillators
+   const osc1 = ctx.createOscillator();
+   const osc2 = ctx.createOscillator();
+   const gain = ctx.createGain();
+   
+   osc1.frequency.setValueAtTime(1200, time);
+   osc2.frequency.setValueAtTime(1600, time);
+   
+   osc1.frequency.exponentialRampToValueAtTime(1800, time + 0.1);
+   osc2.frequency.exponentialRampToValueAtTime(2200, time + 0.1);
+   
+   gain.gain.setValueAtTime(0.1, time);
+   gain.gain.exponentialRampToValueAtTime(0.01, time + 0.5);
+   
+   osc1.connect(gain);
+   osc2.connect(gain);
+   gain.connect(ctx.destination);
+   
+   osc1.start(time);
+   osc2.start(time);
+   osc1.stop(time + 0.5);
+   osc2.stop(time + 0.5);
+  });
+  
+  // Sparkle trail effect
+  document.addEventListener('mousemove', (e) => {
+   // Create sparkles randomly (not on every move for performance)
+   if (Math.random() > 0.7) {
+    const sparkle = document.createElement('div');
+    sparkle.className = 'sparkle';
+    
+    // Random size
+    const size = Math.random() * 6 + 3;
+    sparkle.style.width = size + 'px';
+    sparkle.style.height = size + 'px';
+    sparkle.style.left = e.clientX - size / 2 + 'px';
+    sparkle.style.top = e.clientY - size / 2 + 'px';
+    
+    // Random color from palette (gold, white, pink)
+    const colors = ['#FFD700', '#FFF9E6', '#E89EC0', '#C77DAD'];
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    sparkle.style.background = color;
+    sparkle.style.borderRadius = '50%';
+    sparkle.style.boxShadow = `0 0 ${size * 2}px ${color}`;
+    
+    // Random spread direction
+    const angle = Math.random() * Math.PI * 2;
+    const distance = Math.random() * 30 + 10;
+    sparkle.style.setProperty('--tx', Math.cos(angle) * distance + 'px');
+    sparkle.style.setProperty('--ty', Math.sin(angle) * distance + 'px');
+    
+    document.body.appendChild(sparkle);
+    
+    // Remove element after animation
+    setTimeout(() => sparkle.remove(), 800);
+   }
+  });
+  
+  // Generate floating orbs
+  const orbsContainer = document.getElementById('orbsContainer');
+  const numOrbs = 8;
+  
+  for (let i = 0; i < numOrbs; i++) {
+   const orb = document.createElement('div');
+   orb.className = 'floating-orb';
+   
+   const size = Math.random() * 40 + 15;
+   orb.style.width = size + 'px';
+   orb.style.height = size + 'px';
+   orb.style.left = Math.random() * 100 + '%';
+   orb.style.top = Math.random() * 100 + '%';
+   
+   const colors = ['rgba(255, 215, 0, 0.3)', 'rgba(199, 125, 173, 0.3)', 'rgba(232, 158, 192, 0.3)'];
+   const color = colors[Math.floor(Math.random() * colors.length)];
+   orb.style.background = color;
+   orb.style.boxShadow = `0 0 ${size}px ${color}`;
+   
+   const duration = Math.random() * 8 + 8;
+   const delay = Math.random() * 5;
+   orb.style.animation = `float-orbit ${duration}s infinite ease-in-out ${delay}s`;
+   
+   orbsContainer.appendChild(orb);
+  }
+  
+  // YouTube API for music
+  let isMusicPlaying = true; // Start with music ON
+  const musicToggle = document.getElementById('musicToggle');
+  let youtubePlayer = null;
+  
+  // Load YouTube IFrame API
+  const tag = document.createElement('script');
+  tag.src = 'https://www.youtube.com/iframe_api';
+  document.head.appendChild(tag);
+  
+  // Initialize YouTube player when API is ready
+  window.onYouTubeIframeAPIReady = function() {
+   youtubePlayer = new YT.Player('youtubePlayer', {
+    height: '0',
+    width: '0',
+    videoId: 'MDqvMbq8oVg', // Your Spy x Family Kigeki lofi video ID
+    events: {
+     'onReady': onPlayerReady
+    },
+    playerVars: {
+     'controls': 0,
+     'showinfo': 0,
+     'rel': 0,
+     'modestbranding': 1,
+     'autoplay': 1
+    }
+   });
+  };
+  
+  function onPlayerReady() {
+   // Auto-play music when player is ready
+   youtubePlayer.playVideo();
+   isMusicPlaying = true;
+  }
+  
+  musicToggle.addEventListener('click', () => {
+   if (isMusicPlaying && youtubePlayer) {
+    youtubePlayer.pauseVideo();
+    isMusicPlaying = false;
+    musicToggle.textContent = '🎵 Music: OFF';
+   } else if (youtubePlayer) {
+    youtubePlayer.playVideo();
+    isMusicPlaying = true;
+    musicToggle.textContent = '🎵 Music: ON';
+   }
+  });
+  
+  // Button click handler for blackout transition
+  const viewBtn = document.getElementById('viewBtn');
+  const blackoutOverlay = document.getElementById('blackoutOverlay');
+  
+  viewBtn.addEventListener('click', () => {
+   // Create a magical, ethereal transition sound
+   const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+   const now = audioContext.currentTime;
+   
+   // Create multiple harmonic layers for a magical bell-like sound
+   const notes = [
+    { freq: 880, duration: 0.8 },   // A5
+    { freq: 1100, duration: 0.7 },  // C#6
+    { freq: 1320, duration: 0.6 }   // E6
+   ];
+   
+   notes.forEach((note, index) => {
+    const osc = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+    
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(note.freq, now);
+    
+    // Gentle fade in and out for ethereal effect
+    gain.gain.setValueAtTime(0, now);
+    gain.gain.linearRampToValueAtTime(0.12, now + 0.05);
+    gain.gain.exponentialRampToValueAtTime(0.01, now + note.duration);
+    
+    osc.connect(gain);
+    gain.connect(audioContext.destination);
+    
+    osc.start(now + index * 0.08);
+    osc.stop(now + note.duration);
+   });
+   
+   // Add a shimmer/sparkle effect on top
+   const shimmer = audioContext.createOscillator();
+   const shimmerGain = audioContext.createGain();
+   
+   shimmer.frequency.setValueAtTime(2400, now);
+   shimmer.frequency.exponentialRampToValueAtTime(3200, now + 0.4);
+   
+   shimmerGain.gain.setValueAtTime(0.06, now);
+   shimmerGain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+   
+   shimmer.connect(shimmerGain);
+   shimmerGain.connect(audioContext.destination);
+   
+   shimmer.start(now + 0.1);
+   shimmer.stop(now + 0.5);
+   
+   // Fade to black
+   blackoutOverlay.classList.add('active');
+   
+   // After fade completes, fade back out
+   setTimeout(() => {
+    blackoutOverlay.classList.remove('active');
+    console.log('Transition complete - ready for showcase content');
+   }, 1400); // 700ms fade in + 700ms fade out
+  });
+ </script>
+</body>
+</html>
