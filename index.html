@@ -32,16 +32,18 @@
   button {
    padding: 20px 40px;
    font-size: 20px;
+   font-family: 'Times New Roman', Times, serif, sans-serif;
    background: linear-gradient(135deg, #c77dad 0%, #b89fc5 50%, #f5d5d0 100%);
    color: rgb(100, 47, 47);
    border: none;
    border-radius: 25px;
    cursor: pointer;
    transition: all 0.3s ease;
-   animation: tweenIn 0.6s ease-out;
+   animation: tweenIn 0.6s ease-out, floatUp 5s ease-in-out infinite 0.6s;
+   transition: transform 0.3s ease;
    font-weight: 600;
    box-shadow: 0 0 30px rgba(199, 125, 173, 0.4), 0 0 60px rgba(255, 215, 0, 0.2);
-   letter-spacing: 1px;
+   letter-spacing: 2.5px;
   }
   
   button:hover {
@@ -75,7 +77,7 @@
   
   @keyframes twinkle {
    0%, 100% {
-    opacity: 0.3;
+    opacity: 0;
    }
    50% {
     opacity: 1;
@@ -570,8 +572,9 @@
  <div class="blackout-transition" id="blackoutOverlay"></div>
  <div class="menu-container">
   <h1 class="h1">My Achievement</h1>
-  <p class="subtitle">Celebrate Your Moments</p>
-  <button id="viewBtn" title="Click to see your achievements">Click to View</button>
+  <tweenIn 0.6s ease-out 0.2s backwards>
+    <p class="subtitle">Curious to see my Achievements? Me too!</p></tweenIn>
+  <button id="viewBtn" title="View Achievements? Click! >:)">Click to View</button>
   <p class="instructions">✨ Hover over the moon for a special surprise ✨</p>
  </div>
  
