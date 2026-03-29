@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <title>Anniqa's Achievements</title>
+ <style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+   font-family: 'Times New Roman', Times, serif;
+   min-height: 100vh;
+   overflow-x: hidden;
+  }
+
+   html {
+   background-color: #0a0f0a; /* Dark green/black background */
+  }
+  
+  body {
+   background-color: #0a0f0a;
+   opacity: 0;
+   animation: fadePageIn 0.5s ease-out forwards;
+  }
+
+  
+  @keyframes fadePageIn {
+   0% { opacity: 0; }
+   100% { opacity: 1; }
+  }
+  
+  .blur-bg {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-image: url('Background.gif');
+   background-size: cover;
+   filter: blur(15px);
+   z-index: 0;
+  }
+  
+  .clear-bg {
+   position: fixed;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   width: 80%;
+   height: 80%;
+   background-image: url('Background.gif');
+   background-size: contain;
+   background-position: center;
+   background-repeat: no-repeat;
+   z-index: 1;
+   border: 3px solid rgba(255,255,255,0.8);
+   border-radius: 20px;
+  }
+  
+  .top-nav {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   background: rgba(0,0,0,0.85);
+   backdrop-filter: blur(10px);
+   z-index: 100;
+   border-bottom: 1px solid rgba(255,255,255,0.2);
+  }
+  
+  .nav-container {
+   max-width: 1200px;
+   margin: 0 auto;
+   padding: 15px 30px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   flex-wrap: wrap;
+  }
+  
+  .logo {
+   background: linear-gradient(135deg, #fff, #b9e8ab);
+   -webkit-background-clip: text;
+   background-clip: text;
+   color: transparent;
+   font-size: 1.5em;
+   font-weight: bold;
+  }
+  
+  .nav-links { display: flex; gap: 30px; }
+  
+  .nav-links a {
+   color: white;
+   text-decoration: none;
+   padding: 8px 16px;
+   border-radius: 25px;
+   transition: 0.3s;
+  }
+  
+  .nav-links a:hover { background: rgba(255,255,255,0.2); }
+  .nav-links a.active {
+   background: rgba(185,232,171,0.2);
+   border: 1px solid rgba(185,232,171,0.5);
+  }
+  
+  .main-content {
+   position: relative;
+   z-index: 2;
+   min-height: 100vh;
+   padding: 100px 20px 60px;
+  }
+  
+  .achievements-container {
+   max-width: 800px;
+   margin: 0 auto;
+   background: rgba(0,0,0,0.6);
+   backdrop-filter: blur(10px);
+   border-radius: 30px;
+   border: 2px solid rgba(255,255,255,0.3);
+   padding: 30px;
+  }
+  
+  h1 {
+   color: white;
+   font-size: 2.5em;
+   text-align: center;
+   padding-bottom: 15px;
+   border-bottom: 3px solid #b9e8ab;
+   display: inline-block;
+   width: auto;
+   margin: 0 auto 30px;
+  }
+  
+  .header-center { text-align: center; }
+  
+  .achievement-item {
+   background: rgba(255,255,255,0.1);
+   margin: 15px 0;
+   padding: 18px 22px;
+   border-radius: 15px;
+   border-left: 4px solid #b9e8ab;
+   transition: 0.3s;
+  }
+  
+  .achievement-item:hover {
+   transform: translateX(8px);
+   background: rgba(255,255,255,0.2);
+  }
+  
+  .achievement-row {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   gap: 15px;
+   flex-wrap: wrap;
+  }
+  
+  .achievement-info { flex: 1; }
+  
+  .achievement-title {
+   color: #b9e8ab;
+   font-size: 1.2em;
+   font-weight: bold;
+   margin-bottom: 5px;
+  }
+  
+  .achievement-desc {
+   color: rgba(255,255,255,0.8);
+   font-size: 0.9em;
+  }
+  
+  .view-btn {
+   background: rgba(185,232,171,0.2);
+   border: 1.5px solid #b9e8ab;
+   color: #b9e8ab;
+   padding: 8px 20px;
+   border-radius: 30px;
+   cursor: pointer;
+   font-family: inherit;
+   transition: 0.2s;
+  }
+  
+  .view-btn:hover {
+   background: #b9e8ab;
+   color: #1a2a1a;
+  }
+  
+  .back-button {
+   display: inline-block;
+   margin-top: 30px;
+   padding: 10px 28px;
+   background: rgba(255,255,255,0.2);
+   color: white;
+   text-decoration: none;
+   border-radius: 50px;
+   border: 2px solid rgba(255,255,255,0.6);
+   transition: 0.3s;
+  }
+  
+  .back-button:hover {
+   background: rgba(255,255,255,0.3);
+   border-color: #b9e8ab;
+  }
+  
+  .modal {
+   display: none;
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background: rgba(0,0,0,0.85);
+   backdrop-filter: blur(8px);
+   z-index: 1000;
+   justify-content: center;
+   align-items: center;
+  }
+  
+  .modal.show { display: flex; }
+  
+  .modal-content {
+   background: rgba(10,15,8,0.95);
+   backdrop-filter: blur(15px);
+   max-width: 500px;
+   width: 90%;
+   padding: 30px;
+   border-radius: 25px;
+   border: 2px solid rgba(185,232,171,0.5);
+   position: relative;
+  }
+  
+  .modal-title {
+   color: #b9e8ab;
+   font-size: 1.4em;
+   font-weight: bold;
+   margin-bottom: 15px;
+   padding-right: 25px;
+  }
+  
+  .modal-body {
+   color: rgba(255,255,255,0.9);
+   line-height: 1.6;
+   margin: 15px 0;
+  }
+  
+  .close-modal {
+   position: absolute;
+   top: 12px;
+   right: 18px;
+   font-size: 28px;
+   color: rgba(185,232,171,0.7);
+   cursor: pointer;
+  }
+  
+  .close-modal:hover { color: #b9e8ab; }
+  
+  .modal-close-btn {
+   background: rgba(255,255,255,0.1);
+   border: 1px solid rgba(185,232,171,0.5);
+   color: #b9e8ab;
+   padding: 8px 20px;
+   border-radius: 40px;
+   cursor: pointer;
+  }
+  
+  .modal-close-btn:hover {
+   background: #b9e8ab;
+   color: #1a2a1a;
+  }
+  
+  @keyframes fadeInUp {
+   from { opacity: 0; transform: translateY(20px); }
+   to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .achievements-container { animation: fadeInUp 0.6s ease-out; }
+  
+  @media (max-width: 768px) {
+   .nav-container { flex-direction: column; gap: 10px; padding: 10px; }
+   .nav-links { gap: 15px; }
+   h1 { font-size: 1.8em; }
+   .achievement-row { flex-direction: column; align-items: flex-start; }
+  }
+ </style>
+</head>
+<body>
+
+<div class="blur-bg"></div>
+<div class="clear-bg"></div>
+
+<nav class="top-nav">
+ <div class="nav-container">
+  <div class="logo">🌿 Anniqa Kyren BASHARAT ෴ H10008970 🍃</div>
+  <div class="nav-links">
+   <a href="index.html">Main Menu</a>
+   <a href="page2.html" class="active">Achievements ✨</a>
+  </div>
+ </div>
+</nav>
+
+<div class="main-content">
+ <div class="achievements-container">
+  <div class="header-center"><h1>🏆 My Achievements 🌿</h1></div>
+  
+  <div class="achievement-list">
+   <div class="achievement-item">
+    <div class="achievement-row">
+     <div class="achievement-info">
+      <div class="achievement-title">✨ Quiet Achiever</div>
+      <div class="achievement-desc">My quiet dedication has led to significant accomplishments in growth</div>
+     </div>
+     <button class="view-btn" data-id="1">View</button>
+    </div>
+   </div>
+   
+   <div class="achievement-item">
+    <div class="achievement-row">
+     <div class="achievement-info">
+      <div class="achievement-title">🍅 Cherry Tomato Gardener</div>
+      <div class="achievement-desc">The seeds of the tomatoes i ate gave me cherry tomatoes</div>
+     </div>
+     <button class="view-btn" data-id="2">View</button>
+    </div>
+   </div>
+   
+   <div class="achievement-item">
+    <div class="achievement-row">
+     <div class="achievement-info">
+      <div class="achievement-title">📏 No Measures Needed</div>
+      <div class="achievement-desc">I trust my eyes more than any measuring tool haha</div>
+     </div>
+     <button class="view-btn" data-id="3">View</button>
+    </div>
+   </div>
+   
+   <div class="achievement-item">
+    <div class="achievement-row">
+     <div class="achievement-info">
+      <div class="achievement-title">🤝 Keeper of Friendship</div>
+      <div class="achievement-desc">I'm always sure to annoy my friends whether online, long distance, or in person.</div>
+     </div>
+     <button class="view-btn" data-id="4">View</button>
+    </div>
+   </div>
+   
+   <div class="achievement-item">
+    <div class="achievement-row">
+     <div class="achievement-info">
+      <div class="achievement-title">🏃 Made It This Far</div>
+      <div class="achievement-desc">Still running towards an unknown future</div>
+     </div>
+     <button class="view-btn" data-id="5">View</button>
+    </div>
+   </div>
+  </div>
+  
+  <div style="text-align: center;">
+   <a href="index.html" class="back-button">← Back to Main Menu</a>
+  </div>
+ </div>
+</div>
+
+<div id="achievementModal" class="modal">
+ <div class="modal-content">
+  <span class="close-modal" id="closeModalBtn">&times;</span>
+  <div class="modal-title" id="modalTitle"></div>
+  <div class="modal-body" id="modalBody"></div>
+  <button class="modal-close-btn" id="modalCloseBtn">Close</button>
+ </div>
+</div>
+
+<script>
+ const achievementData = {
+  1: { title: "✨ Quiet Achiever", content: "My Secondary teacher said that \"Let your work speak for itself.\" It carried me through every challenge.<br><br>• Completed projects independently<br>• Helped teammates behind the scenes<br>• Mastered silent excellence 😎<br><br>I guess thats what made me humble as i grew..Thank you teacher" },
+  2: { title: "🍅 Cherry Tomato Gardener", content: "One seed can create a whole new life being.<br><br>• My first sprout kept growing as i cared for it<br>• Grew multiple sprouts and i received a reward as i nurtured it<br>• I got lots of cherry tomatoes for taking care of them<br><br>Being patience rewards you in the end, I dont need to waste money on buying cherry tomatoes again💸💸" },
+  3: { title: "📏 No Measures Needed", content: "Throwing out the rulebook and trusting the gut.<br><br>• Created without blueprints<br>• Made decisions by intuition<br>• Proved 'eye-balling it' works<br><br>Sometimes the best things happen without measuring. 🌀" },
+  4: { title: "🤝 Keeper of Friendship", content: "The friend who stays, no matter the distance.<br><br>• Kept bonds across years<br>• Showed up for important moments<br>• Built a circle that feels like home<br><br>That's you. 💫" },
+  5: { title: "🏃 Made It This Far", content: "Through every twist and turn — still standing.<br><br>• Survived moments that could've broken you<br>• Learned slow progress is still progress<br>• Collected lessons, not regrets<br><br>The best chapters are still ahead. 🔥" }
+ };
+ 
+ const modal = document.getElementById('achievementModal');
+ const modalTitle = document.getElementById('modalTitle');
+ const modalBody = document.getElementById('modalBody');
+ 
+ function openModal(id) {
+   const data = achievementData[id];
+   if (data) {
+     modalTitle.innerHTML = data.title;
+     modalBody.innerHTML = data.content;
+     modal.classList.add('show');
+   }
+ }
+ 
+ function closeModal() { modal.classList.remove('show'); }
+ 
+ document.querySelectorAll('.view-btn').forEach(btn => {
+   btn.addEventListener('click', () => openModal(parseInt(btn.getAttribute('data-id'))));
+ });
+ 
+ document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+ document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+ modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+ document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('show')) closeModal(); });
+</script>
+
+</body>
+</html>
