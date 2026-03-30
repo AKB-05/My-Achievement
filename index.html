@@ -21,7 +21,7 @@
   }
 
    html {
-   background-color: #0a0f0a; /* Dark green/black background */
+   background-color: #0a0f0a;
   }
   
   body {
@@ -35,18 +35,6 @@
    100% { opacity: 1; }
   }
 
-    /* Smooth page transition - prevents white flash */
-  body {
-   opacity: 0;
-   animation: fadePageIn 0.5s ease-out forwards;
-  }
-  
-  @keyframes fadePageIn {
-   0% { opacity: 0; }
-   100% { opacity: 1; }
-  }
-  
-  /* Smooth fade when clicking links */
   a, button {
    transition: all 0.3s ease;
   }
@@ -168,6 +156,7 @@
    justify-content: center;
    min-height: 100vh;
    padding-top: 80px;
+   padding-bottom: 30px;
    box-sizing: border-box;
   }
   
@@ -230,6 +219,31 @@
    justify-content: center;
   }
   
+  /* Simple credits at bottom */
+  .credits {
+   position: fixed;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   text-align: center;
+   padding: 12px;
+   background: rgba(0, 0, 0, 0.5);
+   backdrop-filter: blur(10px);
+   z-index: 2;
+   font-size: 0.75em;
+   color: rgba(255, 255, 255, 0.5);
+   border-top: 1px solid rgba(185, 232, 171, 0.2);
+  }
+  
+  .credits a {
+   color: #b9e8ab;
+   text-decoration: none;
+  }
+  
+  .credits a:hover {
+   color: white;
+  }
+  
   @keyframes fadeInDown {
    0% { opacity: 0; transform: translateY(-30px); }
    100% { opacity: 1; transform: translateY(0); }
@@ -241,6 +255,7 @@
    .nav-links a { font-size: 0.9em; padding: 6px 12px; }
    h1 { font-size: 2em; padding: 15px 25px; }
    h2 { font-size: 1.2em; padding: 10px 20px; }
+   .credits { padding: 8px; font-size: 0.7em; }
   }
  </style>
 </head>
@@ -264,6 +279,11 @@
   <h1>My Achievements</h1>
   <a href="page2.html" style="text-decoration: none;"><h2>Click to view</h2></a>
  </div>
+</div>
+
+<!-- Simple credits at blurry bottom -->
+<div class="credits">
+  DeepSeek AI helped with the code :D
 </div>
 
 </body>
