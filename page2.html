@@ -13,7 +13,7 @@
   }
 
    html {
-   background-color: #0a0f0a; /* Dark green/black background */
+   background-color: #0a0f0a;
   }
   
   body {
@@ -220,7 +220,7 @@
   .modal-content {
    background: rgba(10,15,8,0.95);
    backdrop-filter: blur(15px);
-   max-width: 500px;
+   max-width: 550px;
    width: 90%;
    padding: 30px;
    border-radius: 25px;
@@ -242,6 +242,63 @@
    margin: 15px 0;
   }
   
+  .image-container {
+   display: flex;
+   gap: 15px;
+   margin: 20px 0;
+   flex-wrap: wrap;
+   justify-content: center;
+  }
+  
+  .achievement-img {
+   max-width: 200px;
+   width: 100%;
+   border-radius: 15px;
+   border: 2px solid rgba(185,232,171,0.5);
+   transition: transform 0.3s ease;
+   cursor: pointer;
+  }
+  
+  .achievement-img:hover {
+   transform: scale(1.05);
+   border-color: #b9e8ab;
+  }
+  
+  .video-container {
+   margin: 20px 0;
+   text-align: center;
+  }
+  
+  .achievement-video {
+   max-width: 100%;
+   border-radius: 15px;
+   border: 2px solid rgba(185,232,171,0.5);
+   transition: transform 0.3s ease;
+   cursor: pointer;
+  }
+  
+  .achievement-video:hover {
+   transform: scale(1.02);
+   border-color: #b9e8ab;
+  }
+  
+  .media-container {
+   display: flex;
+   gap: 15px;
+   margin: 20px 0;
+   flex-wrap: wrap;
+   justify-content: center;
+   align-items: center;
+  }
+  
+  .media-container .achievement-img {
+   max-width: 180px;
+  }
+  
+  .media-container .achievement-video {
+   max-width: 280px;
+  }
+  
   .close-modal {
    position: absolute;
    top: 12px;
@@ -260,11 +317,54 @@
    padding: 8px 20px;
    border-radius: 40px;
    cursor: pointer;
+   margin-top: 10px;
   }
   
   .modal-close-btn:hover {
    background: #b9e8ab;
    color: #1a2a1a;
+  }
+  
+  .zoom-modal {
+   display: none;
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background: rgba(0,0,0,0.95);
+   backdrop-filter: blur(10px);
+   z-index: 2000;
+   justify-content: center;
+   align-items: center;
+   cursor: pointer;
+  }
+  
+  .zoom-modal.show {
+   display: flex;
+  }
+  
+  .zoom-modal img {
+   max-width: 90%;
+   max-height: 90%;
+   border-radius: 15px;
+   border: 2px solid #b9e8ab;
+   box-shadow: 0 0 30px rgba(185,232,171,0.3);
+  }
+  
+  .close-zoom {
+   position: absolute;
+   top: 20px;
+   right: 30px;
+   font-size: 40px;
+   color: #b9e8ab;
+   cursor: pointer;
+   z-index: 2001;
+  }
+  
+  .close-zoom:hover {
+   color: white;
+   transform: scale(1.1);
   }
   
   @keyframes fadeInUp {
@@ -279,6 +379,11 @@
    .nav-links { gap: 15px; }
    h1 { font-size: 1.8em; }
    .achievement-row { flex-direction: column; align-items: flex-start; }
+   .image-container { gap: 10px; }
+   .achievement-img { max-width: 150px; }
+   .media-container .achievement-img { max-width: 140px; }
+   .media-container .achievement-video { max-width: 220px; }
+   .close-zoom { top: 15px; right: 20px; font-size: 30px; }
   }
  </style>
 </head>
@@ -299,7 +404,7 @@
 
 <div class="main-content">
  <div class="achievements-container">
-  <div class="header-center"><h1>🏆 My Achievements 🌿</h1></div>
+  <div class="header-center"><h1>My Achievements (Fun edition) 🌿</h1></div>
   
   <div class="achievement-list">
    <div class="achievement-item">
@@ -368,18 +473,76 @@
  </div>
 </div>
 
+<div id="zoomModal" class="zoom-modal" onclick="closeZoom()">
+ <span class="close-zoom" onclick="closeZoom()">&times;</span>
+ <img id="zoomedImage" src="" alt="Zoomed Image">
+</div>
+
 <script>
  const achievementData = {
-  1: { title: "✨ Quiet Achiever", content: "My Secondary teacher said that \"Let your work speak for itself.\" It carried me through every challenge.<br><br>• Completed projects independently<br>• Helped teammates behind the scenes<br>• Mastered silent excellence 😎<br><br>I guess thats what made me humble as i grew..Thank you teacher" },
-  2: { title: "🍅 Cherry Tomato Gardener", content: "One seed can create a whole new life being.<br><br>• My first sprout kept growing as i cared for it<br>• Grew multiple sprouts and i received a reward as i nurtured it<br>• I got lots of cherry tomatoes for taking care of them<br><br>Being patience rewards you in the end, I dont need to waste money on buying cherry tomatoes again💸💸" },
-  3: { title: "📏 No Measures Needed", content: "Throwing out the rulebook and trusting the gut.<br><br>• Created without blueprints<br>• Made decisions by intuition<br>• Proved 'eye-balling it' works<br><br>Sometimes the best things happen without measuring. 🌀" },
-  4: { title: "🤝 Keeper of Friendship", content: "The friend who stays, no matter the distance.<br><br>• Kept bonds across years<br>• Showed up for important moments<br>• Built a circle that feels like home<br><br>That's you. 💫" },
-  5: { title: "🏃 Made It This Far", content: "Through every twist and turn — still standing.<br><br>• Survived moments that could've broken you<br>• Learned slow progress is still progress<br>• Collected lessons, not regrets<br><br>The best chapters are still ahead. 🔥" }
- };
- 
+  1: { 
+    title: "✨ Quiet Achiever", 
+    content: "My Secondary teacher said that \"Let your work speak for itself.\" It carried me through every challenge.<br><br>• Completed projects independently<br>• Helped teammates behind the scenes<br>• Mastered silent excellence 😎<br><br>" +
+      '<div class="image-container">' +
+      '<img src="Untitled338_20260330145742.png" alt="Quiet Achiever" class="achievement-img" onclick="openZoom(this.src)">' +
+      '</div>' +
+      "I guess thats what made me humble as i grew..Thank you teacher" 
+  },
+  2: { 
+    title: "🍅 Cherry Tomato Gardener", 
+    content: "One seed can create a whole new life being.<br><br>• My first sprout kept growing as i cared for it<br>• Grew multiple sprouts and i received a reward as i nurtured it<br>• I got lots of cherry tomatoes for taking care of them<br><br>" +
+      '<div class="media-container">' +
+      '<img src="tomatoes.jpg" alt="Cherry Tomatoes" class="achievement-img" onclick="openZoom(this.src)">' +
+      '<video controls class="achievement-video" style="max-width: 280px; width: 100%;" controlsList="nodownload">' +
+      '<source src="tomato-video.mp4" type="video/mp4">' +
+      'Your browser does not support the video tag.' +
+      '</video>' +
+      '</div>' +
+      "Being patience rewards you in the end, I dont need to waste money on buying cherry tomatoes again💸💸" 
+  },
+  3: { 
+    title: "📏 No Measures Needed", 
+    content: "I dont like making a mess out of measuring tools just for baking a good bread..<br><br>• Created without recipe measurements<br>• Made decisions by intuition 😎<br>• Proved that 'eye-balling it' works<br><br>" +
+      '<div class="image-container">' +
+      '<img src="bread1.jpg" alt="Bread 1" class="achievement-img" onclick="openZoom(this.src)">' +
+      '<img src="bread2.jpg" alt="Bread 2" class="achievement-img" onclick="openZoom(this.src)">' +
+      '</div>' +
+      "Best baked goods ever 10/10" 
+  },
+  4: { 
+    title: "🤝 Keeper of Friendship", 
+    content: "No matter how far we live apart, im always here to send you reels ✌️<br><br>• Kept bonds across years<br>• 10000+ messages a year <3<br>• Built a circle that feels like home<br><br>" +
+      '<div class="image-container">' +
+      '<img src="EK69DNPW4AAIB4V.jpg" alt="Internet Friends" class="achievement-img" onclick="openZoom(this.src)">' +
+      '</div>' +
+      "Like my second family 🤪" 
+  },
+  5: { 
+    title: "🏃 Made It This Far", 
+    content: "Im done hiding, now im shining like im born to beeee ✨<br><br>• Survived moments that could've exhausted the life out of me<br>• Learned slow progress is still progress<br>• I have collected lessons, not regrets<br><br>" +
+      '<div class="image-container">' +
+      '<img src="thank-you-god-9fc99b.jpg" alt="Made It This Far" class="achievement-img" onclick="openZoom(this.src)">' +
+      '</div>' +
+      "The best chapters are still ahead 🔥" 
+  }
+};
  const modal = document.getElementById('achievementModal');
  const modalTitle = document.getElementById('modalTitle');
  const modalBody = document.getElementById('modalBody');
+ 
+ const zoomModal = document.getElementById('zoomModal');
+ const zoomedImage = document.getElementById('zoomedImage');
+ 
+ function openZoom(src) {
+   zoomedImage.src = src;
+   zoomModal.classList.add('show');
+   document.body.style.overflow = 'hidden';
+ }
+ 
+ function closeZoom() {
+   zoomModal.classList.remove('show');
+   document.body.style.overflow = '';
+ }
  
  function openModal(id) {
    const data = achievementData[id];
@@ -399,7 +562,12 @@
  document.getElementById('closeModalBtn').addEventListener('click', closeModal);
  document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
- document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('show')) closeModal(); });
+ document.addEventListener('keydown', e => { 
+   if (e.key === 'Escape') {
+     if (modal.classList.contains('show')) closeModal();
+     if (zoomModal.classList.contains('show')) closeZoom();
+   }
+ });
 </script>
 
 </body>
